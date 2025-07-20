@@ -1,2 +1,4 @@
 **/venv
 __pycache__
+dist
+otp_cli_utils.egg-info
