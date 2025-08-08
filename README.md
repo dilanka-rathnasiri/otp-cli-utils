@@ -1,18 +1,28 @@
-# py-otp-cli
+# OTP CLI Utils
 
-A Python CLI tool to validate OTP codes using a secret.
+A simple command-line utility for validating TOTP (Time-based One-Time Password) codes
 
 ## Installation
 
+Install the package using pip:
+
 ```bash
-pip install py-otp-cli
+pip install otp-cli-utils
 ```
 
 ## Usage
 
+### Validate an OTP
+
 ```bash
-py-otp-cli <otp_code> <otp_secret>
+otp-utils {{otp}} {{secret}}
 ```
 
-- `<otp_code>`: The OTP code to validate
-- `<otp_secret>`: The secret used to generate the OTP
+Example:
+```bash
+otp-utils 123456 ABCDEF123456
+```
+
+### Exit Codes
+- `0`: OTP is valid
+- `1`: OTP is invalid
