@@ -2,8 +2,8 @@ import sys
 
 import typer
 
-from .services.otp_services import validate_otp
-from .utils import msg_utils
+from otp_cli_utils.services.otp_services import validate_otp
+from otp_cli_utils.utils import msg_utils
 
 app = typer.Typer()
 
