@@ -1,6 +1,6 @@
 # OTP CLI Utils
 
-A simple command-line utility for validating TOTP (Time-based One-Time Password) codes
+A command-line utility for working with TOTP (Time-based One-Time Password) codes
 
 ## Installation
 
@@ -12,17 +12,32 @@ pip install otp-cli-utils
 
 ## Usage
 
-### Validate an OTP
+### Get Current OTP Code
+
+Get the current OTP code for a given secret:
 
 ```bash
-otp-utils {{otp}} {{secret}}
+otp-utils get-otp <secret>
 ```
 
 Example:
 ```bash
-otp-utils 123456 ABCDEF123456
+otp-utils get-otp ABCDEF123456
+```
+
+### Validate an OTP
+
+Validate if an OTP code matches the expected value for a given secret:
+
+```bash
+otp-utils validate <otp> <secret>
+```
+
+Example:
+```bash
+otp-utils validate 123456 ABCDEF123456
 ```
 
 ### Exit Codes
-- `0`: OTP is valid
-- `1`: OTP is invalid
+- `0`: Command executed successfully
+- `1`: Invalid OTP (for validate command) or error occurred
