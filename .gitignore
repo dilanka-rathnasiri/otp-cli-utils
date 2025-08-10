@@ -1,4 +1,15 @@
-**/venv
-__pycache__
+# ide
+.vscode
+
+# venv
+venv
+
+# python
+**/__pycache__
+
+# packaging
 dist
-otp_cli_utils.egg-info
+src/otp_cli_utils.egg-info
+
+# testing
+src/otp_cli_utils/test.py
