@@ -11,7 +11,7 @@ app = typer.Typer(
 )
 
 
-@app.command(help="get otp code")
+@app.command("get-otp", help="get otp code")
 def get_otp(secret: str = typer.Argument(help="OTP secret")):
     """
     Get the current OTP code for the given secret
@@ -33,6 +33,15 @@ def validate(
     else:
         msg_utils.print_error_msg("Invalid OTP")
         sys.exit(1)
+
+
+@app.command("generate-secret", help="generate a new OTP secret")
+def generate_secret():
+    """
+    Generate a new secure random secret key for OTP generation
+    """
+    secret = otp_services.generate_otp_secret()
+    msg_utils.print_success_msg(f"Generated OTP secret: {secret}")
 
 
 def main():
