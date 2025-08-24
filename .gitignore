@@ -15,4 +15,4 @@ src/otp_cli_utils.egg-info
 src/otp_cli_utils/test.py
 
 # pytest
-.pytest_cache
+**/.pytest_cache
