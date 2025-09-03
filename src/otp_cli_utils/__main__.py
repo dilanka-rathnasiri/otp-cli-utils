@@ -2,7 +2,8 @@ import sys
 
 import typer
 
-from otp_cli_utils.services import otp_services
+from otp_cli_utils.constants import help_texts
+from otp_cli_utils.services import img_services, otp_services, qr_services
 from otp_cli_utils.utils import msg_utils
 
 app = typer.Typer(
@@ -42,6 +43,24 @@ def generate_secret():
     """
     secret = otp_services.generate_otp_secret()
     msg_utils.print_success_msg(f"Generated OTP secret: {secret}")
+
+
+@app.command("generate-qr-code", help=help_texts.GENERATE_SECRET_QR_CODE)
+def generate_secret_qr_code(
+    secret: str = typer.Argument(help="OTP secret"),
+    label: str = typer.Argument(help="Label for the OTP secret"),
+    issuer: str = typer.Argument(help="Issuer for the OTP secret"),
+    file_name: str = typer.Argument(
+        default="secret_qr", help="File name for the QR code"
+    ),
+):
+    """
+    Generate a Google Authenticator Compatible QR code
+    """
+    secret = otp_services.generate_otp_secret()
+    uri = otp_services.generate_uri(secret, label, issuer)
+    img = qr_services.generate_qr_code(uri)
+    img_services.save_image(img, file_name)
 
 
 def main():
