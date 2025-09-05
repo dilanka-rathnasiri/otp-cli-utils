@@ -49,7 +49,6 @@ def generate_secret():
     command_texts.GENERATE_SECRET_QR_CODE, help=help_texts.GENERATE_SECRET_QR_CODE
 )
 def generate_secret_qr_code(
-    secret: str = typer.Argument(help=help_texts.SECRET_ARG),
     label: str = typer.Argument(help=help_texts.LABEL_ARG),
     issuer: str = typer.Argument(help=help_texts.ISSUER_ARG),
     file_name: str = typer.Argument(
@@ -57,7 +56,7 @@ def generate_secret_qr_code(
     ),
 ):
     """
-    Generate a Google Authenticator Compatible QR code
+    Generate a Google Authenticator Compatible QR code with a new OTP secret
     """
     secret = otp_services.generate_otp_secret()
     uri = otp_services.generate_uri(secret, label, issuer)
