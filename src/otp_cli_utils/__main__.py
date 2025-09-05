@@ -51,7 +51,7 @@ def generate_secret_qr_code(
     label: str = typer.Argument(help="Label for the OTP secret"),
     issuer: str = typer.Argument(help="Issuer for the OTP secret"),
     file_name: str = typer.Argument(
-        default="secret_qr", help="File name for the QR code"
+        default="otp_secret_qr", help="File name for the QR code"
     ),
 ):
     """
@@ -60,7 +60,8 @@ def generate_secret_qr_code(
     secret = otp_services.generate_otp_secret()
     uri = otp_services.generate_uri(secret, label, issuer)
     img = qr_services.generate_qr_code(uri)
-    img_services.save_image(img, file_name)
+    saved_file_path = img_services.save_image(img, file_name)
+    msg_utils.print_success_msg(msg=f"OTP secret QR code saved to {saved_file_path}")
 
 
 def main():
