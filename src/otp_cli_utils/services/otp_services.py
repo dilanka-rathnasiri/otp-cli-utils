@@ -16,13 +16,13 @@ def get_otp(secret: str) -> str:
     return totp.now()
 
 
-def validate_otp(otp_code: str, secret: str) -> bool:
+def validate_otp(secret: str, otp_code: str) -> bool:
     """
     Validate an OTP code against a secret key
 
     Args:
-        otp_code (str): The OTP code to validate
         secret (str): The secret key to validate against
+        otp_code (str): The OTP code to validate
 
     Returns:
         bool: True if the OTP code is valid, False otherwise
@@ -48,8 +48,8 @@ def generate_uri(secret: str, label: str, issuer: str) -> str:
 
     Args:
         secret (str): The OTP secret key
-        label (str): OTP secret label
-        issuer (str): Issuer name
+        label (str): Account name
+        issuer (str): Service or provider name
 
     Returns:
         str: A URI string compatible with Google Authenticator

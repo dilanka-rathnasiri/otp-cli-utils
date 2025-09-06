@@ -23,13 +23,13 @@ def get_otp(secret: str = typer.Argument(help=help_texts.SECRET_ARG)):
 
 @app.command(command_texts.VALIDATE, help=help_texts.VALIDATE)
 def validate(
-    otp: str = typer.Argument(help=help_texts.OTP_ARG),
     secret: str = typer.Argument(help=help_texts.SECRET_ARG),
+    otp: str = typer.Argument(help=help_texts.OTP_ARG),
 ):
     """
     Validate if the provided OTP matches the expected value for the given secret
     """
-    if otp_services.validate_otp(otp, secret):
+    if otp_services.validate_otp(secret, otp):
         msg_utils.print_success_msg("Valid OTP")
     else:
         msg_utils.print_error_msg("Invalid OTP")

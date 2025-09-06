@@ -20,7 +20,7 @@ def test_validate_valid_otp(otp_secret, totp_instance):
     """
     current_otp_code = totp_instance.now()
 
-    assert otp_services.validate_otp(current_otp_code, otp_secret) is True
+    assert otp_services.validate_otp(otp_secret, current_otp_code) is True
 
 
 def test_validate_invalid_otp(otp_secret):
@@ -29,4 +29,4 @@ def test_validate_invalid_otp(otp_secret):
     """
     current_otp_code = "1234567"
 
-    assert otp_services.validate_otp(current_otp_code, otp_secret) is False
+    assert otp_services.validate_otp(otp_secret, current_otp_code) is False
