@@ -62,7 +62,11 @@ def generate_secret_qr_code(
     uri = otp_services.generate_uri(secret, label, issuer)
     img = qr_services.generate_qr_code(uri)
     saved_file_path = img_services.save_image(img, file_name)
-    msg_utils.print_success_msg(msg=f"OTP secret QR code saved to {saved_file_path}")
+    message = (
+        f"Generated OTP secret: {secret}\n\n"
+        f"OTP secret QR code saved to: {saved_file_path}"
+    )
+    msg_utils.print_success_msg(message)
 
 
 def main():
