@@ -24,8 +24,8 @@ def get_otp_times_for_window_count(window_count: int) -> List[datetime]:
     return [now - timedelta(seconds=30 * i) for i in range(window_count + 1)]
 
 
-def validate_otp_at(totp: TOTP, secret: str, otp_at: datetime) -> bool:
-    return totp.verify(secret, otp_at)
+def validate_otp_at(totp: TOTP, otp_code: str, otp_at: datetime) -> bool:
+    return totp.verify(otp_code, otp_at)
 
 
 def validate_otp(secret: str, otp_code: str, window_count: int) -> bool:
@@ -42,7 +42,7 @@ def validate_otp(secret: str, otp_code: str, window_count: int) -> bool:
     totp = TOTP(secret.upper())
 
     if window_count == 0:
-        return validate_otp_at(totp, secret, datetime.now())
+        return validate_otp_at(totp, otp_code, datetime.now())
 
     otp_times = get_otp_times_for_window_count(window_count)
 
