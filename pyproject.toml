@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "otp-cli-utils"
-version = "1.1.0"
+version = "1.2.0"
 description = "A Python CLI tool to validate OTP codes"
 dependencies = [
     "typer",
     "rich",
-    "pyotp"
+    "pyotp",
+    "qrcode[pil]"
 ]
 requires-python = ">=3.10"
 authors = [{ name = "Dilanka Rathnasiri" }]
@@ -36,3 +37,4 @@ otp-cli-utils = "otp_cli_utils.__main__:app"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+exclude = ["src/tests"]
