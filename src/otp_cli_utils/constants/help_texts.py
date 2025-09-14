@@ -15,3 +15,6 @@ OTP_ARG = "The OTP code to validate"
 LABEL_ARG = "Label for the OTP secret"
 ISSUER_ARG = "Issuer for the OTP secret"
 FILENAME_ARG = "File name for the QR code (without extension)"
+WINDOW_COUNT_ARG = (
+    "Tokens in the previous 30s time windows that should be considered valid"
+)

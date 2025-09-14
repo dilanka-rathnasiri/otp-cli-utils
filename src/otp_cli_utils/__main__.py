@@ -27,7 +27,7 @@ def validate(
     otp: str = typer.Argument(help=help_texts.OTP_ARG),
     window_count: int = typer.Argument(
         default=0,
-        help="Tokens in the previous 30s time windows that should be considered valid",
+        help=help_texts.WINDOW_COUNT_ARG,
     ),
 ):
     """
