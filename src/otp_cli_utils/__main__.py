@@ -25,8 +25,10 @@ def get_otp(secret: str = typer.Argument(help=help_texts.SECRET_ARG)):
 def validate(
     secret: str = typer.Argument(help=help_texts.SECRET_ARG),
     otp: str = typer.Argument(help=help_texts.OTP_ARG),
-    window_count: int = typer.Argument(
-        default=0,
+    window_count: int = typer.Option(
+        0,
+        "--window-count",
+        "-w",
         help=help_texts.WINDOW_COUNT_ARG,
     ),
 ):
