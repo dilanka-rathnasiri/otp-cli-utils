@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta
+from typing import List
+
 import pyotp
 from pyotp import TOTP
 
@@ -16,7 +19,16 @@ def get_otp(secret: str) -> str:
     return totp.now()
 
 
-def validate_otp(secret: str, otp_code: str) -> bool:
+def get_otp_times_for_window_count(window_count: int) -> List[datetime]:
+    now = datetime.now()
+    return [now - timedelta(seconds=30 * i) for i in range(window_count + 1)]
+
+
+def validate_otp_at(totp: TOTP, otp_code: str, otp_at: datetime) -> bool:
+    return totp.verify(otp_code, otp_at)
+
+
+def validate_otp(secret: str, otp_code: str, window_count: int) -> bool:
     """
     Validate an OTP code against a secret key
 
@@ -28,7 +40,17 @@ def validate_otp(secret: str, otp_code: str) -> bool:
         bool: True if the OTP code is valid, False otherwise
     """
     totp = TOTP(secret.upper())
-    return totp.verify(otp_code)
+
+    if window_count == 0:
+        return validate_otp_at(totp, otp_code, datetime.now())
+
+    otp_times = get_otp_times_for_window_count(window_count)
+
+    for otp_time in otp_times:
+        if totp.verify(otp_code, otp_time):
+            return True
+
+    return False
 
 
 def generate_otp_secret() -> str:

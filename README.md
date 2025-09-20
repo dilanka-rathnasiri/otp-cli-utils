@@ -38,12 +38,21 @@ otp-cli-utils get-otp ABCDEF1234567890
 Validate if an OTP code matches the expected value for a given secret:
 
 ```bash
-otp-cli-utils validate <secret> <otp>
+otp-cli-utils validate <secret> <otp> [--window-count <count>]
 ```
 
+Options:
+- `--window-count`, `-w`: Tokens in the previous 30s time windows that should be considered valid (default: 0)
+
 Example:
+- Without window count option
 ```bash
 otp-cli-utils validate ABCDEF1234567890 123456
+```
+
+- With window count option
+```bash
+otp-cli-utils validate ABCDEF1234567890 123456 --window-count 2
 ```
 
 ### Generate a New OTP Secret

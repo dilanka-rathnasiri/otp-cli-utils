@@ -25,11 +25,17 @@ def get_otp(secret: str = typer.Argument(help=help_texts.SECRET_ARG)):
 def validate(
     secret: str = typer.Argument(help=help_texts.SECRET_ARG),
     otp: str = typer.Argument(help=help_texts.OTP_ARG),
+    window_count: int = typer.Option(
+        0,
+        "--window-count",
+        "-w",
+        help=help_texts.WINDOW_COUNT_ARG,
+    ),
 ):
     """
     Validate if the provided OTP matches the expected value for the given secret
     """
-    if otp_services.validate_otp(secret, otp):
+    if otp_services.validate_otp(secret, otp, window_count):
         msg_utils.print_success_msg("Valid OTP")
     else:
         msg_utils.print_error_msg("Invalid OTP")
