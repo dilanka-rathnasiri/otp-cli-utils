@@ -24,6 +24,19 @@ def get_otp_times_for_window_count(window_count: int) -> List[datetime]:
     return [now - timedelta(seconds=30 * i) for i in range(window_count + 1)]
 
 
+def get_past_window_count_for_valid_time_period(time_period: int) -> int:
+    """
+    Calculate the number of past 30s time windows for the given valid time period
+
+    Args:
+        time_period (int): The time period in seconds
+
+    Returns:
+        int: The number of 30s time windows
+    """
+    return time_period // 30 - 1
+
+
 def validate_otp_at(totp: TOTP, otp_code: str, otp_at: datetime) -> bool:
     return totp.verify(otp_code, otp_at)
 
