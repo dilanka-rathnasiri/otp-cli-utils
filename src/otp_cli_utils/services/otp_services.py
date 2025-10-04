@@ -35,7 +35,7 @@ def get_otp_times_for_window_count(window_count: int) -> List[datetime]:
     return [now - timedelta(seconds=30 * i) for i in range(window_count + 1)]
 
 
-def get_window_count_for_time_period(time_period: int) -> int:
+def get_windows_for_time_period(time_period: int) -> int:
     """
     Calculate the number of past 30s time windows for the given valid time period
 

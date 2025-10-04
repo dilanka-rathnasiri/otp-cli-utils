@@ -39,7 +39,7 @@ def validate(
     Validate if the provided OTP matches the expected value for the given secret
     """
     if valid_time_period >= 60:
-        window_count = otp_services.get_window_count_for_time_period(valid_time_period)
+        window_count = otp_services.get_windows_for_time_period(valid_time_period)
 
     if otp_services.validate_otp(secret, otp, window_count):
         msg_utils.print_success_msg("Valid OTP")
