@@ -18,3 +18,4 @@ FILENAME_ARG = "File name for the QR code (without extension)"
 WINDOW_COUNT_ARG = (
     "Tokens in the previous 30s time windows that should be considered valid"
 )
+VALID_TIME_PERIOD_ARG = "OTP valid time period in seconds"

@@ -31,10 +31,16 @@ def validate(
         "-w",
         help=help_texts.WINDOW_COUNT_ARG,
     ),
+    valid_time_period: int = typer.Option(
+        30, "--time-period", "-t", help=help_texts.VALID_TIME_PERIOD_ARG
+    ),
 ):
     """
     Validate if the provided OTP matches the expected value for the given secret
     """
+    if valid_time_period >= 60:
+        window_count = otp_services.get_windows_for_time_period(valid_time_period)
+
     if otp_services.validate_otp(secret, otp, window_count):
         msg_utils.print_success_msg("Valid OTP")
     else:
