@@ -2,8 +2,14 @@ import sys
 
 import typer
 
-from otp_cli_utils.constants import command_texts, help_texts
-from otp_cli_utils.services import img_services, otp_services, qr_services
+from otp_cli_utils.constants import command_texts, error_texts, help_texts
+from otp_cli_utils.errors.invalid_input_error import InvalidInputError
+from otp_cli_utils.services import (
+    img_services,
+    otp_services,
+    qr_services,
+    validation_services,
+)
 from otp_cli_utils.utils import msg_utils
 
 app = typer.Typer(
@@ -38,13 +44,21 @@ def validate(
     """
     Validate if the provided OTP matches the expected value for the given secret
     """
-    if valid_time_period >= 60:
-        window_count = otp_services.get_windows_for_time_period(valid_time_period)
+    try:
+        # Validate all inputs
+        validation_services.validate_secret(secret)
 
-    if otp_services.validate_otp(secret, otp, window_count):
-        msg_utils.print_success_msg("Valid OTP")
-    else:
-        msg_utils.print_error_msg("Invalid OTP")
+        if valid_time_period >= 60:
+            window_count = otp_services.get_windows_for_time_period(valid_time_period)
+
+        if otp_services.validate_otp(secret, otp, window_count):
+            msg_utils.print_success_msg(error_texts.VALID_OTP_TEXT)
+        else:
+            msg_utils.print_error_msg(error_texts.INVALID_OTP_TEXT)
+            sys.exit(1)
+
+    except InvalidInputError as e:
+        msg_utils.print_error_msg(f"Invalid input: {str(e)}")
         sys.exit(1)
 
 
