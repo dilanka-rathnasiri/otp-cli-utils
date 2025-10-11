@@ -3,13 +3,13 @@ import sys
 import typer
 
 from otp_cli_utils.constants import command_texts, error_texts, help_texts
-from otp_cli_utils.errors.invalid_input_error import InvalidInputError
 from otp_cli_utils.services import (
     img_services,
     otp_services,
     qr_services,
     validation_services,
 )
+from otp_cli_utils.services.error_handling import handle_invalid_input
 from otp_cli_utils.utils import msg_utils
 
 app = typer.Typer(
@@ -19,15 +19,23 @@ app = typer.Typer(
 
 
 @app.command(command_texts.GET_OTP, help=help_texts.GET_OTP)
+@handle_invalid_input
 def get_otp(secret: str = typer.Argument(help=help_texts.SECRET_ARG)):
     """
     Get the current OTP code for the given secret
+
+    Args:
+        secret: The base32 encoded secret key for OTP generation
     """
+    # Validate the secret before processing
+    validation_services.validate_secret(secret)
+
     otp = otp_services.get_otp(secret)
     msg_utils.print_success_msg(f"Current OTP: {otp}")
 
 
 @app.command(command_texts.VALIDATE, help=help_texts.VALIDATE)
+@handle_invalid_input
 def validate(
     secret: str = typer.Argument(help=help_texts.SECRET_ARG),
     otp: str = typer.Argument(help=help_texts.OTP_ARG),
@@ -44,21 +52,19 @@ def validate(
     """
     Validate if the provided OTP matches the expected value for the given secret
     """
-    try:
-        # Validate all inputs
-        validation_services.validate_secret(secret)
+    # Validate all inputs
+    validation_services.validate_secret(secret)
+    validation_services.validate_otp_code(otp)
+    validation_services.validate_window_count(window_count)
+    validation_services.validate_time_period(valid_time_period)
 
-        if valid_time_period >= 60:
-            window_count = otp_services.get_windows_for_time_period(valid_time_period)
+    if valid_time_period >= 60:
+        window_count = otp_services.get_windows_for_time_period(valid_time_period)
 
-        if otp_services.validate_otp(secret, otp, window_count):
-            msg_utils.print_success_msg(error_texts.VALID_OTP_TEXT)
-        else:
-            msg_utils.print_error_msg(error_texts.INVALID_OTP_TEXT)
-            sys.exit(1)
-
-    except InvalidInputError as e:
-        msg_utils.print_error_msg(f"Invalid input: {str(e)}")
+    if otp_services.validate_otp(secret, otp, window_count):
+        msg_utils.print_success_msg(error_texts.VALID_OTP_TEXT)
+    else:
+        msg_utils.print_error_msg(error_texts.INVALID_OTP_TEXT)
         sys.exit(1)
 
 
