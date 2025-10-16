@@ -5,9 +5,9 @@ import typer
 from otp_cli_utils.constants import command_texts, error_texts, help_texts
 from otp_cli_utils.services import (
     img_services,
+    input_validation_services,
     otp_services,
     qr_services,
-    validation_services,
 )
 from otp_cli_utils.services.error_handling import handle_invalid_input
 from otp_cli_utils.utils import msg_utils
@@ -28,7 +28,7 @@ def get_otp(secret: str = typer.Argument(help=help_texts.SECRET_ARG)):
         secret: The base32 encoded secret key for OTP generation
     """
     # Validate the secret before processing
-    validation_services.validate_secret(secret)
+    input_validation_services.validate_input_secret(secret)
 
     otp = otp_services.get_otp(secret)
     msg_utils.print_success_msg(f"Current OTP: {otp}")
@@ -53,10 +53,10 @@ def validate(
     Validate if the provided OTP matches the expected value for the given secret
     """
     # Validate all inputs
-    validation_services.validate_secret(secret)
-    validation_services.validate_otp_code(otp)
-    validation_services.validate_window_count(window_count)
-    validation_services.validate_time_period(valid_time_period)
+    input_validation_services.validate_input_secret(secret)
+    input_validation_services.validate_input_otp_code(otp)
+    input_validation_services.validate_input_window_count(window_count)
+    input_validation_services.validate_input_time_period(valid_time_period)
 
     if valid_time_period >= 60:
         window_count = otp_services.get_windows_for_time_period(valid_time_period)

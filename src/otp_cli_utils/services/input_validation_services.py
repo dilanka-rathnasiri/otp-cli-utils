@@ -6,7 +6,7 @@ from otp_cli_utils.constants import error_texts
 from otp_cli_utils.errors.invalid_input_error import InvalidInputError
 
 
-def validate_secret(secret: str) -> None:
+def validate_input_secret(secret: str) -> None:
     """
     Validate if the secret is a valid base32 string
 
@@ -39,7 +39,7 @@ def validate_secret(secret: str) -> None:
         raise InvalidInputError(error_texts.INVALID_SECRET_BASE32_TEXT)
 
 
-def validate_otp_code(otp: str) -> None:
+def validate_input_otp_code(otp: str) -> None:
     """
     Validate if the OTP code is a 6-digit number
 
@@ -53,7 +53,7 @@ def validate_otp_code(otp: str) -> None:
         raise InvalidInputError(error_texts.INVALID_OTP_FORMAT_TEXT)
 
 
-def validate_window_count(window_count: int) -> None:
+def validate_input_window_count(window_count: int) -> None:
     """
     Validate the window count parameter
 
@@ -69,7 +69,7 @@ def validate_window_count(window_count: int) -> None:
         raise InvalidInputError(error_texts.INVALID_WINDOW_COUNT_RANGE_TEXT)
 
 
-def validate_time_period(time_period: int) -> None:
+def validate_input_time_period(time_period: int) -> None:
     """
     Validate the time period parameter
 
