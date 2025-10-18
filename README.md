@@ -94,6 +94,27 @@ otp-cli-utils generate-secret-qr-code "user@example.com" "GitHub" github_2fa
 - `0`: Command executed successfully
 - `1`: Invalid OTP (for validate command) or error occurred
 
+## Input Validation
+
+The tool performs the following validations on the inputs:
+
+- **OTP Secret**:
+  - Must be a valid Base32 encoded string.
+  - The length of the secret must be a multiple of 8.
+  - It can only contain uppercase letters (`A-Z`), digits from `2` to `7`, and the padding character (`=`).
+
+- **OTP Code**:
+  - Must be a 6-digit number.
+
+- **Window Count (`--window-count`, `-w`)**:
+  - Must be an integer.
+  - Must be a non-negative number (0 or greater).
+
+- **Time Period (`--time-period`, `-t`)**:
+  - Must be an integer.
+  - Must be 30 seconds or greater.
+  - Must be a multiple of 30.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
