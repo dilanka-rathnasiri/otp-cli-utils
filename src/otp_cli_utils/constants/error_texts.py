@@ -18,3 +18,12 @@ INVALID_TIME_PERIOD_RANGE_TEXT = (
     "Time period must be greater than or equal to 30 seconds"
 )
 INVALID_TIME_PERIOD_MULTIPLE_TEXT = "Time period must be a multiple of 30 seconds"
+
+# validate command error texts
+BOTH_WINDOW_COUNT_AND_TIME_PERIOD_TEXT = (
+    "Only one option from window count or valid time period can be provided"
+)
+
+# generate ecret qr code
+INVALID_LABEL_TEXT = "Label can't be empty"
+INVALID_ISSUER_TEXT = "Issuer can't be empty"
