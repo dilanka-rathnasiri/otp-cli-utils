@@ -29,6 +29,7 @@ otp-cli-utils get-otp <secret>
 ```
 
 Example:
+
 ```bash
 otp-cli-utils get-otp ABCDEF1234567890
 ```
@@ -38,25 +39,29 @@ otp-cli-utils get-otp ABCDEF1234567890
 Validate if an OTP code matches the expected value for a given secret:
 
 ```bash
-otp-cli-utils validate <secret> <otp> [--window-count <count>] [--time-period <seconds>]
+otp-cli-utils validate <secret> <otp> [--window-count <count> | --time-period <seconds>]
 ```
 
-Options:
-- `--window-count`, `-w`: Tokens in the previous 30s time windows that should be considered valid (default: 0)
-- `--time-period`, `-t`: OTP valid time period in seconds (default: 30)
+Options (mutually exclusive - use only one):
+- `--window-count`, `-w`: Number of time steps to validate against (default: 0)
+- `--time-period`, `-t`: Time period in seconds to validate against (must be ≥30 and a multiple of 30)
 
-Example:
-- Without window count or time period option
+Examples:
+
+- Basic validation (checks current time step only):
+
 ```bash
 otp-cli-utils validate ABCDEF1234567890 123456
 ```
 
-- With window count option
+- With window count (checks current and previous N time steps):
+
 ```bash
 otp-cli-utils validate ABCDEF1234567890 123456 --window-count 2
 ```
 
-- With time period option
+- With custom time period (in seconds, must be multiple of 30):
+
 ```bash
 otp-cli-utils validate ABCDEF1234567890 123456 --time-period 120
 ```
@@ -85,6 +90,7 @@ Arguments:
 - `filename`: (Optional) Output filename without extension (default: otp_secret_qr)
 
 Example:
+
 ```bash
 otp-cli-utils generate-secret-qr-code "user@example.com" "GitHub" github_2fa
 ```
